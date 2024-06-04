@@ -2523,6 +2523,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "geo-service"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-graphql",
+ "async-graphql-axum",
+ "axum 0.7.5",
+ "build-info",
+ "build-info-build",
+ "clap",
+ "figment",
+ "graphql",
+ "hex-literal",
+ "indexer-common",
+ "lazy_static",
+ "reqwest 0.12.4",
+ "serde",
+ "serde_json",
+ "shellexpand",
+ "thegraph",
+ "thegraph-graphql-http",
+ "thiserror",
+ "tokio",
+ "toml",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "getrandom"
 version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"

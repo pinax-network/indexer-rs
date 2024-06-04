@@ -1,5 +1,5 @@
 [workspace]
-members = ["common", "service", "tap-agent"]
+members = ["common", "service", "tap-agent", "geo-service"]
 resolver = "2"
 
 [profile.dev.package."*"]
