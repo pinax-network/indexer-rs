@@ -1,0 +1,41 @@
+[common.indexer]
+indexer_address = "0x09e50Be8194B4E536449eDBf73Efad261657ee5C"
+operator_mnemonic = "board account across miss boy jelly gauge era friend dutch junk expand"
+
+[common.server]
+host_and_port = "0.0.0.0:7600"
+url_prefix = "/"
+
+[common.database]
+postgres_url = "postgresql://arbtest:secret@localhost:5432/agent-db0"
+
+[common.graph_node]
+query_base_url = "http://graph-node:8000"
+status_url = "http://graph-node:8030/graphql"
+
+[common.network_subgraph]
+deployment = "QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL"
+query_url = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
+recently_closed_allocation_buffer_seconds = 60
+serve_subgraph = true
+syncing_interval = 30
+
+[common.escrow_subgraph]
+deployment = "QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL"
+query_url = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
+serve_subgraph = true
+syncing_interval = 30
+
+[common.graph_network]
+id = 1
+chain_id = 421614
+
+[common.scalar]
+chain_id = 421614
+receipts_verifier_address = "0xac01B0b3B2Dc5D8E0D484c02c4d077C15C96a7b4"
+timestamp_error_tolerance = 30
+receipt_max_value = 100000000
+
+[geo.geo_node]
+status_url = "https://geo-conduit.up.railway.app/graphql"
+query_base_url = "https://geo-conduit.up.railway.app"
