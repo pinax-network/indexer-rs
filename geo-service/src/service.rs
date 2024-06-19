@@ -18,6 +18,7 @@ use clap::Parser;
 use indexer_common::indexer_service::http::{
     IndexerService, IndexerServiceOptions, IndexerServiceRelease,
 };
+use regex::Regex;
 use tracing::error;
 
 #[derive(Debug)]
@@ -69,6 +70,18 @@ impl GeoService {
     }
 }
 
+fn rewrite_request(mut value: Value) -> Value {
+    let re = Regex::new(r"block:\s*[^,]+,?").unwrap();
+
+    if let Some(query) = value.get_mut("query") {
+        if let Some(query_str) = query.as_str() {
+            let cleaned_query = re.replace_all(query_str, "").to_string();
+            *query = Value::String(cleaned_query);
+        }
+    }
+    value
+}
+
 #[async_trait]
 impl IndexerServiceImpl for GeoService {
     type Error = GeoServiceError;
@@ -86,7 +99,8 @@ impl IndexerServiceImpl for GeoService {
                 .map_err(|_| GeoServiceError::InvalidDeployment(deployment))?;
 
         // strip stuff from the request that we don't want to forward
-
+        let request = rewrite_request(request);
+        tracing::info!("Forwarding request: {:?}", request);
         let response = self
             .state
             .geo_node_client

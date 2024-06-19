@@ -1,6 +1,6 @@
 [package]
 name = "geo-service"
-version = "0.1.0"
+version = "10.1.0"
 edition = "2021"
 license = "Apache-2.0"
 
@@ -38,6 +38,7 @@ toml = "0.8.12"
 shellexpand = { version = "3.1.0", default-features = false, features = [
     "base-0",
 ] }
+regex = "1.10.5"
 
 [dev-dependencies]
 hex-literal = "0.4.1"

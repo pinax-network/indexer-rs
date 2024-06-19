@@ -54,12 +54,34 @@ impl IntoRequestParameters for WrappedGraphQLRequest {
     }
 }
 
+fn replace_subgraph_id(value: &mut Value, old: &str, new: &str) {
+    match value {
+        Value::Object(map) => {
+            for (_, v) in map.iter_mut() {
+                replace_subgraph_id(v, old, new);
+            }
+            if let Some(subgraph) = map.get_mut("subgraph") {
+                if subgraph == old {
+                    *subgraph = Value::String(new.to_string());
+                }
+            }
+        }
+        Value::Array(arr) => {
+            for v in arr.iter_mut() {
+                replace_subgraph_id(v, old, new);
+            }
+        }
+        _ => {}
+    }
+}
+
 // Custom middleware function to process the request before reaching the main handler
 pub async fn status(
     State(state): State<Arc<GeoServiceState>>,
     request: GraphQLRequest,
 ) -> Result<impl IntoResponse, GeoServiceError> {
     let request = request.into_inner();
+    tracing::info!("Processing status request: {}", request.query);
 
     let query: q::Document<String> = q::parse_query(request.query.as_str())
         .map_err(|e| GeoServiceError::InvalidStatusQuery(e.into()))?;
@@ -106,8 +128,17 @@ pub async fn status(
         .await
         .map_err(|e| GeoServiceError::StatusQueryError(e.into()))?;
 
+    tracing::info!("Status response: {:?}", result);
+
     result
-        .map(|data| Json(json!({"data": data})))
+        .map(|mut data| {
+            replace_subgraph_id(
+                &mut data,
+                "geo",
+                "QmVfNm8Jok8fFtspmFYYGTo5Sp7BvP3nYr6UHvDrLe6ewp",
+            );
+            Json(json!({"data": data}))
+        })
         .or_else(|e| match e {
             ResponseError::Failure { errors } => Ok(Json(json!({
                 "errors": errors,
