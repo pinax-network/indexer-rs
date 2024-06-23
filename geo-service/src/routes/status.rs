@@ -83,6 +83,13 @@ pub async fn status(
     let request = request.into_inner();
     tracing::info!("Processing status request: {}", request.query);
 
+    if request.query == "{ version { version } }" {
+        return Ok(Json(json!({
+            "data": { },
+            "errors": null
+        })));
+    }
+
     let query: q::Document<String> = q::parse_query(request.query.as_str())
         .map_err(|e| GeoServiceError::InvalidStatusQuery(e.into()))?;
 
@@ -128,9 +135,7 @@ pub async fn status(
         .await
         .map_err(|e| GeoServiceError::StatusQueryError(e.into()))?;
 
-    tracing::info!("Status response: {:?}", result);
-
-    result
+    let result = result
         .map(|mut data| {
             replace_subgraph_id(
                 &mut data,
@@ -144,5 +149,9 @@ pub async fn status(
                 "errors": errors,
             }))),
             ResponseError::Empty => todo!(),
-        })
+        });
+
+    tracing::info!("Status response: {:?}", result);
+
+    result
 }
