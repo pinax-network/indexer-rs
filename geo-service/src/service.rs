@@ -122,8 +122,8 @@ impl IndexerServiceImpl for GeoService {
         let attestable = response
             .headers()
             .get("graph-attestable")
-            .map_or(false, |value| {
-                value.to_str().map(|value| value == "true").unwrap_or(false)
+            .map_or(true, |value| {
+                value.to_str().map(|value| value == "true").unwrap_or(true) // default is true
             });
 
         let body = response
