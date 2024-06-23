@@ -71,12 +71,21 @@ impl GeoService {
 }
 
 fn rewrite_request(mut value: Value) -> Value {
-    let re = Regex::new(r"block:\s*[^,]+,?").unwrap();
-
     if let Some(query) = value.get_mut("query") {
         if let Some(query_str) = query.as_str() {
-            let cleaned_query = re.replace_all(query_str, "").to_string();
-            *query = Value::String(cleaned_query);
+            let cleaned = regex::Regex::new(r"\s*,?\s*block\s*:\s*(null|\{[^}]*\})\s*,?")
+                .unwrap()
+                .replace_all(query_str, "")
+                .to_string();
+            let cleaned = regex::Regex::new(r"\(\s*,\s*")
+                .unwrap()
+                .replace_all(&cleaned, "(")
+                .to_string();
+            let cleaned = regex::Regex::new(r"\(\s*\)")
+                .unwrap()
+                .replace_all(&cleaned, "")
+                .to_string();
+            *query = Value::String(cleaned);
         }
     }
     value
@@ -99,13 +108,13 @@ impl IndexerServiceImpl for GeoService {
                 .map_err(|_| GeoServiceError::InvalidDeployment(deployment))?;
 
         // strip stuff from the request that we don't want to forward
-        let request = rewrite_request(request);
-        tracing::info!("Forwarding request: {:?}", request);
+        let rewritten_request = rewrite_request(request.clone());
+        tracing::info!("Forwarding request: {:?}", rewritten_request);
         let response = self
             .state
             .geo_node_client
             .post(deployment_url)
-            .json(&request)
+            .json(&rewritten_request)
             .send()
             .await
             .map_err(GeoServiceError::QueryForwardingError)?;
