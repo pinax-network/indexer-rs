@@ -35,6 +35,7 @@ receipts_verifier_address = "0xfC24cE7a4428A6B89B52645243662A02BA734ECF"
 timestamp_error_tolerance = 30
 receipt_max_value = 10000000000000000
 
-[geo.geo_node]
+[geo]
 status_url = "https://geo-conduit.up.railway.app/graphql"
 query_base_url = "https://geo-conduit.up.railway.app"
+subgraph_deployment_id = "QmVfNm8Jok8fFtspmFYYGTo5Sp7BvP3nYr6UHvDrLe6ewp"

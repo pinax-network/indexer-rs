@@ -12,14 +12,10 @@ use indexer_common::indexer_service::http::IndexerServiceConfig;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct GeoNodeConfig {
+pub struct GeoServiceConfig {
     pub status_url: String,
     pub query_base_url: String,
-}
-
-#[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct GeoServiceConfig {
-    pub geo_node: Option<GeoNodeConfig>,
+    pub subgraph_deployment_id: String,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]

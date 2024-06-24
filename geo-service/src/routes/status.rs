@@ -29,6 +29,8 @@ lazy_static::lazy_static! {
             "subgraphFeatures",
             "apiVersions",
         ].into_iter().collect();
+
+    static ref VERSION_QUERY: regex::Regex = regex::Regex::new(r#"\{\s*version\s*\{\s*version\s*\}\s*\}"#).unwrap();
 }
 
 struct WrappedGraphQLRequest(async_graphql::Request);
@@ -83,11 +85,8 @@ pub async fn status(
     let request = request.into_inner();
     tracing::info!("Processing status request: {}", request.query);
 
-    if request.query == "{ version { version } }" {
-        return Ok(Json(json!({
-            "data": { },
-            "errors": null
-        })));
+    if VERSION_QUERY.is_match(&request.query) {
+        return Ok(Json(json!({ "data": { } })));
     }
 
     let query: q::Document<String> = q::parse_query(request.query.as_str())
@@ -130,7 +129,7 @@ pub async fn status(
 
     let result = state
         .geo_node_client
-        .post(&state.geo_node_status_url)
+        .post(&state.config.geo.status_url)
         .send_graphql::<Value>(WrappedGraphQLRequest(request))
         .await
         .map_err(|e| GeoServiceError::StatusQueryError(e.into()))?;
@@ -140,7 +139,7 @@ pub async fn status(
             replace_subgraph_id(
                 &mut data,
                 "geo",
-                "QmVfNm8Jok8fFtspmFYYGTo5Sp7BvP3nYr6UHvDrLe6ewp",
+                state.config.geo.subgraph_deployment_id.as_str(),
             );
             Json(json!({"data": data}))
         })

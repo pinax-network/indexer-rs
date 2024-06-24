@@ -7,11 +7,13 @@
 # can use shell expansions with environment variables. Example:
 # postgres_url = "postgresql://indexer:${POSTGRES_PASSWORD}@postgres:5432/indexer_components_0"
 
-[geo.geo_node]
+[geo]
 # URL to your geo-node's status endpoint
 status_url = "http://geo-node:8030/graphql"
 # URL to your geo-node's query endpoint
 query_base_url = "http://geo-node:8000"
+# Geo subgraph deployment id
+subgraph_deployment_id = "QmVfNm8Jok8fFtspmFYYGTo5Sp7BvP3nYr6UHvDrLe6ewp"
 
 [common.indexer]
 indexer_address = "0x1111111111111111111111111111111111111111"

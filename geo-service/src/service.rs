@@ -18,7 +18,6 @@ use clap::Parser;
 use indexer_common::indexer_service::http::{
     IndexerService, IndexerServiceOptions, IndexerServiceRelease,
 };
-use regex::Regex;
 use tracing::error;
 
 #[derive(Debug)]
@@ -56,8 +55,6 @@ impl IndexerServiceResponse for GeoServiceResponse {
 pub struct GeoServiceState {
     pub config: Config,
     pub geo_node_client: reqwest::Client,
-    pub geo_node_status_url: String,
-    pub geo_node_query_base_url: String,
 }
 
 struct GeoService {
@@ -103,9 +100,11 @@ impl IndexerServiceImpl for GeoService {
         deployment: DeploymentId,
         request: Self::Request,
     ) -> Result<(Self::Request, Self::Response), Self::Error> {
-        let deployment_url =
-            Url::parse(&format!("{}/graphql", &self.state.geo_node_query_base_url))
-                .map_err(|_| GeoServiceError::InvalidDeployment(deployment))?;
+        let deployment_url = Url::parse(&format!(
+            "{}/graphql",
+            &self.state.config.geo.query_base_url
+        ))
+        .map_err(|_| GeoServiceError::InvalidDeployment(deployment))?;
 
         // strip stuff from the request that we don't want to forward
         let rewritten_request = rewrite_request(request.clone());
@@ -166,20 +165,6 @@ pub async fn run() -> Result<(), Error> {
             .timeout(Duration::from_secs(30))
             .build()
             .expect("Failed to init HTTP client for Geo Node"),
-        geo_node_status_url: config
-            .geo
-            .geo_node
-            .as_ref()
-            .expect("Config must have `geo.geo_node.status_url` set")
-            .status_url
-            .clone(),
-        geo_node_query_base_url: config
-            .geo
-            .geo_node
-            .as_ref()
-            .expect("config must have `geo.geo_node.query_url` set")
-            .query_base_url
-            .clone(),
     });
 
     IndexerService::run(IndexerServiceOptions {
