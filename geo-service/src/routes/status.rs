@@ -83,7 +83,7 @@ pub async fn status(
     request: GraphQLRequest,
 ) -> Result<impl IntoResponse, GeoServiceError> {
     let request = request.into_inner();
-    tracing::info!("Processing status request: {}", request.query);
+    tracing::debug!("Status request: {}", request.query);
 
     if VERSION_QUERY.is_match(&request.query) {
         return Ok(Json(json!({ "data": { } })));
@@ -150,7 +150,7 @@ pub async fn status(
             ResponseError::Empty => todo!(),
         });
 
-    tracing::info!("Status response: {:?}", result);
+    tracing::debug!("Status response: {:?}", result);
 
     result
 }
