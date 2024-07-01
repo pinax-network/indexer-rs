@@ -83,7 +83,11 @@ pub async fn status(
     request: GraphQLRequest,
 ) -> Result<impl IntoResponse, GeoServiceError> {
     let request = request.into_inner();
-    tracing::debug!("Status request: {}", request.query);
+    tracing::debug!(
+        "Status request: {}, Variables: {}",
+        request.query,
+        request.variables
+    );
 
     if VERSION_QUERY.is_match(&request.query) {
         return Ok(Json(json!({ "data": { } })));

@@ -13,7 +13,7 @@ postgres_url = "postgresql://arbtest:secret@localhost:5432/agent-db0"
 
 [common.network_subgraph]
 deployment = "QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL"
-query_url = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
+query_url = "https://gateway-arbitrum.network.thegraph.com/api/59e6a0d08017849c6633a6336de22c4b/subgraphs/id/3xQHhMudr1oh69ut36G2mbzpYmYxwqCeU6wwqyCDCnqV"
 recently_closed_allocation_buffer_seconds = 60
 serve_subgraph = false
 syncing_interval = 60
@@ -22,7 +22,7 @@ syncing_interval = 60
 deployment = "QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL"
 query_url = "https://gateway-arbitrum.network.thegraph.com/api/59e6a0d08017849c6633a6336de22c4b/subgraphs/id/7ubx365MiqBH5iUz6XWXWT8PTof5BVAyEzdb8m17RvbD"
 serve_subgraph = false
-syncing_interval = 300
+syncing_interval = 60
 
 [common.graph_network]
 id = 1
@@ -36,6 +36,6 @@ timestamp_error_tolerance = 30
 receipt_max_value = 10000000000000000
 
 [geo]
-status_url = "https://geo-conduit.up.railway.app/graphql"
-query_base_url = "https://geo-conduit.up.railway.app"
-subgraph_deployment_id = "QmVfNm8Jok8fFtspmFYYGTo5Sp7BvP3nYr6UHvDrLe6ewp"
+status_url = "http://localhost:5001/graphql"
+query_base_url = "http://localhost:5001"
+subgraph_deployment_id = "Qmc7kurCQYtmrWQKdYeapmJvXQD3a5WrATc6zpx2J8FA5T"
