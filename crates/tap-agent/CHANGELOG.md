@@ -4,6 +4,63 @@
 
 
 
+## [3.0.0](https://github.com/pinax-network/indexer-rs/compare/indexer-tap-agent-v2.2.1...indexer-tap-agent-v3.0.0) (2026-11-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* TAP agent now requires Horizon mode to be enabled. Legacy V1 receipt handling has been removed in favor of exclusive V2 (Horizon) protocol support. The V1 escrow accounts watcher and hybrid migration mode are no longer available.
+
+### Features
+
+* add allocation reconciliation ([#882](https://github.com/pinax-network/indexer-rs/issues/882)) ([f8f8522](https://github.com/pinax-network/indexer-rs/commit/f8f852204778965e66d92ef53677c27b9c83b829))
+* add escape hatch to trusted senders ([#621](https://github.com/pinax-network/indexer-rs/issues/621)) ([bdc40ef](https://github.com/pinax-network/indexer-rs/commit/bdc40ef33ee0b9b063ca8eeaa5374ef6f4779626))
+* add option to avoid denying senders ([#607](https://github.com/pinax-network/indexer-rs/issues/607)) ([d0731e3](https://github.com/pinax-network/indexer-rs/commit/d0731e3bf2e36f587e9318be9028897a0a35cda4))
+* advertise DIPs prices via /dips/info endpoint ([#1037](https://github.com/pinax-network/indexer-rs/issues/1037)) ([6abdf97](https://github.com/pinax-network/indexer-rs/commit/6abdf97f949a23d91fa890c082417f7d17cc9b3d))
+* grpc client for tap aggregator ([#583](https://github.com/pinax-network/indexer-rs/issues/583)) ([c3ede8f](https://github.com/pinax-network/indexer-rs/commit/c3ede8f8bfe1820dd0bdc8876af083a8971d39ff))
+* improve sender allocation logging ([#703](https://github.com/pinax-network/indexer-rs/issues/703)) ([b9fc3ba](https://github.com/pinax-network/indexer-rs/commit/b9fc3ba2335631654872d2b6b4341973ab1f617d))
+* remove v1 escrow ([#1015](https://github.com/pinax-network/indexer-rs/issues/1015)) ([07069a4](https://github.com/pinax-network/indexer-rs/commit/07069a4ad12d2d0b3f830965e8f53643f80c5754))
+* **sender_account:** Propagate new subgraph_service_address to receipt layers ([8c8dd2b](https://github.com/pinax-network/indexer-rs/commit/8c8dd2b2b6849af3923472ad38aa7d9836cb1935))
+* support horizon ([#752](https://github.com/pinax-network/indexer-rs/issues/752)) ([e8474bb](https://github.com/pinax-network/indexer-rs/commit/e8474bb265ecce8d8be9859ae2b2044c6d2224b0))
+* **tap-agent:** use network subgraph for Horizon RAV redemption tracking ([#922](https://github.com/pinax-network/indexer-rs/issues/922)) ([1aafc9b](https://github.com/pinax-network/indexer-rs/commit/1aafc9b386f063e8977a12c90f73d88a5777948e))
+
+
+### Bug Fixes
+
+* add receipts timeout config ([#537](https://github.com/pinax-network/indexer-rs/issues/537)) ([2438895](https://github.com/pinax-network/indexer-rs/commit/243889570d2a2146816a23dab3bfe39e79e5e010))
+* **config:** add missing config field ([26a6f56](https://github.com/pinax-network/indexer-rs/commit/26a6f5680a6bfefb9ae82e3d08c2562179780a10))
+* **config:** several configuration optimizations ([#1014](https://github.com/pinax-network/indexer-rs/issues/1014)) ([0584738](https://github.com/pinax-network/indexer-rs/commit/058473875a3e02b1b5c73b4af119afd82e69b14e))
+* empty commit to trigger release pipeline for audit fixes ([#1011](https://github.com/pinax-network/indexer-rs/issues/1011)) ([bc5f93f](https://github.com/pinax-network/indexer-rs/commit/bc5f93f23deafea273d0097c008daa3a50a04271))
+* **horizon:** use subgraph_service in query for V2 receipts ([8c8dd2b](https://github.com/pinax-network/indexer-rs/commit/8c8dd2b2b6849af3923472ad38aa7d9836cb1935))
+* **integration-tests:** fund v1 and v2 escrow in test setup ([e8474bb](https://github.com/pinax-network/indexer-rs/commit/e8474bb265ecce8d8be9859ae2b2044c6d2224b0))
+* reconciliation escrow looks ups must use subgraph service address ([#891](https://github.com/pinax-network/indexer-rs/issues/891)) ([5a27f7d](https://github.com/pinax-network/indexer-rs/commit/5a27f7d96f06b4ee17ee6732b0060b3dae5a3408))
+* send allocation creation message to correct sender account ([387d660](https://github.com/pinax-network/indexer-rs/commit/387d660a7a9a4f2a669762408f872e36251a3855))
+* shutdown tap-agent if db connection lost ([#520](https://github.com/pinax-network/indexer-rs/issues/520)) ([16b42e2](https://github.com/pinax-network/indexer-rs/commit/16b42e2c41d9c0bbe5d6e187eea49c79cdeac8d9))
+* start listening to messages after start up ([#518](https://github.com/pinax-network/indexer-rs/issues/518)) ([7e5d280](https://github.com/pinax-network/indexer-rs/commit/7e5d28085402fdd9110ab61e4fc4b6d767ab9fff))
+* stop losing invalid payment receipts on a failed write ([#1047](https://github.com/pinax-network/indexer-rs/issues/1047)) ([1947b18](https://github.com/pinax-network/indexer-rs/commit/1947b18c934d3b9de91b734c413fd01c3154f341))
+* **tap-agent:** check horizon is active before checking for escrow ([#776](https://github.com/pinax-network/indexer-rs/issues/776)) ([e15ea7a](https://github.com/pinax-network/indexer-rs/commit/e15ea7a65d13bdefe3ab86cd563636a48901b354))
+* **tap-agent:** eagerly initialize metrics at startup ([#888](https://github.com/pinax-network/indexer-rs/issues/888)) ([a7bef7e](https://github.com/pinax-network/indexer-rs/commit/a7bef7e4f2e5d95eb7d8683822288fab989ebd25))
+* **tap-agent:** handle padded collection id parsing ([#789](https://github.com/pinax-network/indexer-rs/issues/789)) ([fc6d112](https://github.com/pinax-network/indexer-rs/commit/fc6d112cc5f10dacebfc90f6780bbb3cbf5d1adf))
+* **tap-agent:** use unique sender ID in metrics cleanup test ([#913](https://github.com/pinax-network/indexer-rs/issues/913)) ([83219bb](https://github.com/pinax-network/indexer-rs/commit/83219bb01d4b9f0267f29e64eac6c04f9dff9833))
+* **tap:** wait for RAV processing to finish before counting receipts ([#1046](https://github.com/pinax-network/indexer-rs/issues/1046)) ([b8a5b04](https://github.com/pinax-network/indexer-rs/commit/b8a5b04bda7b448002033880420a7baf23f94bdc))
+* Temporarily disable Horizon, enhance agent stability and logging ([#691](https://github.com/pinax-network/indexer-rs/issues/691)) ([175ec75](https://github.com/pinax-network/indexer-rs/commit/175ec75e5d675eb382a8fa3ced670aa28cdcb577))
+* trigger release for recent dependency updates ([#730](https://github.com/pinax-network/indexer-rs/issues/730)) ([f3ca43f](https://github.com/pinax-network/indexer-rs/commit/f3ca43f9780f24e8b62c5478ccadfb2f6b10cc00))
+* trigger release-please after branch cleanup ([#794](https://github.com/pinax-network/indexer-rs/issues/794)) ([400af6d](https://github.com/pinax-network/indexer-rs/commit/400af6d4102f23a643f10778f01509f7d1f120dd))
+* trigger tap agent and service releases ([#809](https://github.com/pinax-network/indexer-rs/issues/809)) ([2da2bd7](https://github.com/pinax-network/indexer-rs/commit/2da2bd780c35cc5f71fe5aa509ce8378d296570a))
+* TrustSec audit findings - Low severity batch ([#905](https://github.com/pinax-network/indexer-rs/issues/905)) ([4e80ec0](https://github.com/pinax-network/indexer-rs/commit/4e80ec0c6847fdbad6f7f858e1a4c65c2da9f195))
+* update tap, axum, tonic, alloy dependencies: ([#702](https://github.com/pinax-network/indexer-rs/issues/702)) ([6e49c0c](https://github.com/pinax-network/indexer-rs/commit/6e49c0ceb61c0a972d36237cfc365dd7af72e9e3))
+
+
+### Performance Improvements
+
+* explicitly cast char(n) types in tap receipts table queries ([#1022](https://github.com/pinax-network/indexer-rs/issues/1022)) ([e5c6b62](https://github.com/pinax-network/indexer-rs/commit/e5c6b62bde468602f6b077c931aec9e9b26494d4))
+* speed up startup setup queries ([#625](https://github.com/pinax-network/indexer-rs/issues/625)) ([c5b115e](https://github.com/pinax-network/indexer-rs/commit/c5b115e997a71582dad7d75c4c954cece225fdaa))
+
+
+### Miscellaneous Chores
+
+* remove support for legacy v1 receipts ([#929](https://github.com/pinax-network/indexer-rs/issues/929)) ([262c908](https://github.com/pinax-network/indexer-rs/commit/262c908b77b7fac3a39faf2854657ba1de284454))
+
 ## [2.2.1](https://github.com/graphprotocol/indexer-rs/compare/indexer-tap-agent-v2.2.0...indexer-tap-agent-v2.2.1) (2026-07-16)
 
 

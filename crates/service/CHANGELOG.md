@@ -6,6 +6,64 @@
 
 
 
+## [3.0.0](https://github.com/pinax-network/indexer-rs/compare/indexer-service-rs-v2.2.1...indexer-service-rs-v3.0.0) (2026-11-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* TAP agent now requires Horizon mode to be enabled. Legacy V1 receipt handling has been removed in favor of exclusive V2 (Horizon) protocol support. The V1 escrow accounts watcher and hybrid migration mode are no longer available.
+
+### Features
+
+* add graph-indexed header in subgraph query response ([#522](https://github.com/pinax-network/indexer-rs/issues/522)) ([a0d719f](https://github.com/pinax-network/indexer-rs/commit/a0d719f1a0834ff5ba99522fadd6b52c079425d3)), closes [#494](https://github.com/pinax-network/indexer-rs/issues/494)
+* add request status code for handler metric ([59eed9f](https://github.com/pinax-network/indexer-rs/commit/59eed9f347458fdae0798f12e500533c302a9c40))
+* advertise DIPs prices via /dips/info endpoint ([#1037](https://github.com/pinax-network/indexer-rs/issues/1037)) ([6abdf97](https://github.com/pinax-network/indexer-rs/commit/6abdf97f949a23d91fa890c082417f7d17cc9b3d))
+* Escrow based signer validation ([#635](https://github.com/pinax-network/indexer-rs/issues/635)) ([454c925](https://github.com/pinax-network/indexer-rs/commit/454c925f184fbd8b454ef9aaea86fc53a218fcea))
+* remove v1 escrow ([#1015](https://github.com/pinax-network/indexer-rs/issues/1015)) ([07069a4](https://github.com/pinax-network/indexer-rs/commit/07069a4ad12d2d0b3f830965e8f53643f80c5754))
+* **sender_account:** Propagate new subgraph_service_address to receipt layers ([8c8dd2b](https://github.com/pinax-network/indexer-rs/commit/8c8dd2b2b6849af3923472ad38aa7d9836cb1935))
+* **service:** add /healthz endpoint for dependency health checks ([#925](https://github.com/pinax-network/indexer-rs/issues/925)) ([9e7b67a](https://github.com/pinax-network/indexer-rs/commit/9e7b67acdb9c57f562587be5d66ab0a256e2bd11))
+* support horizon ([#752](https://github.com/pinax-network/indexer-rs/issues/752)) ([e8474bb](https://github.com/pinax-network/indexer-rs/commit/e8474bb265ecce8d8be9859ae2b2044c6d2224b0))
+* support multiple operator mnemonics for attestation signing ([#884](https://github.com/pinax-network/indexer-rs/issues/884)) ([f42fcbc](https://github.com/pinax-network/indexer-rs/commit/f42fcbcb70f314e7770f87cbcc849f9da747246c))
+* **tap-agent:** use network subgraph for Horizon RAV redemption tracking ([#922](https://github.com/pinax-network/indexer-rs/issues/922)) ([1aafc9b](https://github.com/pinax-network/indexer-rs/commit/1aafc9b386f063e8977a12c90f73d88a5777948e))
+
+
+### Bug Fixes
+
+* allow responses for free queries with no allocation open ([#622](https://github.com/pinax-network/indexer-rs/issues/622)) ([bce155e](https://github.com/pinax-network/indexer-rs/commit/bce155e8515bd4e8a666a42d621a82776727a8cd))
+* **config:** several configuration optimizations ([#1014](https://github.com/pinax-network/indexer-rs/issues/1014)) ([0584738](https://github.com/pinax-network/indexer-rs/commit/058473875a3e02b1b5c73b4af119afd82e69b14e))
+* empty commit to trigger release pipeline for audit fixes ([#1011](https://github.com/pinax-network/indexer-rs/issues/1011)) ([bc5f93f](https://github.com/pinax-network/indexer-rs/commit/bc5f93f23deafea273d0097c008daa3a50a04271))
+* error in order for middleware router ([12dc95c](https://github.com/pinax-network/indexer-rs/commit/12dc95c11fe0b6f8e82bfc7604f8079a5010e414))
+* **horizon:** use subgraph_service in query for V2 receipts ([8c8dd2b](https://github.com/pinax-network/indexer-rs/commit/8c8dd2b2b6849af3923472ad38aa7d9836cb1935))
+* **indexer:** propagate database errors back to the caller ([#715](https://github.com/pinax-network/indexer-rs/issues/715)) ([0e85079](https://github.com/pinax-network/indexer-rs/commit/0e850794f53457e0fdeb7b9a70a4e1332914d23e))
+* **integration-tests:** fund v1 and v2 escrow in test setup ([e8474bb](https://github.com/pinax-network/indexer-rs/commit/e8474bb265ecce8d8be9859ae2b2044c6d2224b0))
+* invalid serialization of CheckHealthError ([#565](https://github.com/pinax-network/indexer-rs/issues/565)) ([73fdc95](https://github.com/pinax-network/indexer-rs/commit/73fdc958aa93d89b8f58f3a93d859236d59ba20e))
+* Prevent GraphQL query bypass and add service provider validation ([#898](https://github.com/pinax-network/indexer-rs/issues/898)) ([f18cde8](https://github.com/pinax-network/indexer-rs/commit/f18cde8ca00cc3572ccf8702fbf8388fd210c982))
+* retain headers in attestation middleware ([#577](https://github.com/pinax-network/indexer-rs/issues/577)) ([0d76f35](https://github.com/pinax-network/indexer-rs/commit/0d76f35c70b252f0df34d919a43785f3c860dc01))
+* **service:** add PayerCheck to validate V2 receipt payer field ([#915](https://github.com/pinax-network/indexer-rs/issues/915)) ([3ec85ba](https://github.com/pinax-network/indexer-rs/commit/3ec85ba1fdbf240b10569d8f2243b03e96486f78))
+* skip processing of receipts when there's no receipt for a version ([#653](https://github.com/pinax-network/indexer-rs/issues/653)) ([811567e](https://github.com/pinax-network/indexer-rs/commit/811567eb0e227a84afbb9d5c438074b4a6ad03ae))
+* status endpoint hardcoded size limit ([#953](https://github.com/pinax-network/indexer-rs/issues/953)) ([518b681](https://github.com/pinax-network/indexer-rs/commit/518b68131cdfeb91426c8b2fe6410671f25309d5))
+* **tap:** fix unused v2 deny list check ([#711](https://github.com/pinax-network/indexer-rs/issues/711)) ([ab4aaba](https://github.com/pinax-network/indexer-rs/commit/ab4aaba294c417e94766cdaaac8efda89509b544))
+* Temporarily disable Horizon, enhance agent stability and logging ([#691](https://github.com/pinax-network/indexer-rs/issues/691)) ([175ec75](https://github.com/pinax-network/indexer-rs/commit/175ec75e5d675eb382a8fa3ced670aa28cdcb577))
+* trigger release for recent dependency updates ([#730](https://github.com/pinax-network/indexer-rs/issues/730)) ([f3ca43f](https://github.com/pinax-network/indexer-rs/commit/f3ca43f9780f24e8b62c5478ccadfb2f6b10cc00))
+* trigger release-please after branch cleanup ([#794](https://github.com/pinax-network/indexer-rs/issues/794)) ([400af6d](https://github.com/pinax-network/indexer-rs/commit/400af6d4102f23a643f10778f01509f7d1f120dd))
+* trigger tap agent and service releases ([#809](https://github.com/pinax-network/indexer-rs/issues/809)) ([2da2bd7](https://github.com/pinax-network/indexer-rs/commit/2da2bd780c35cc5f71fe5aa509ce8378d296570a))
+* TrustSec audit findings - Low severity batch ([#905](https://github.com/pinax-network/indexer-rs/issues/905)) ([4e80ec0](https://github.com/pinax-network/indexer-rs/commit/4e80ec0c6847fdbad6f7f858e1a4c65c2da9f195))
+* update status code for errors ([4e05c90](https://github.com/pinax-network/indexer-rs/commit/4e05c90537ffd35656a10a652b2ae5678ed026d8))
+* update tap, axum, tonic, alloy dependencies: ([#702](https://github.com/pinax-network/indexer-rs/issues/702)) ([6e49c0c](https://github.com/pinax-network/indexer-rs/commit/6e49c0ceb61c0a972d36237cfc365dd7af72e9e3))
+* use direct HTTP forwarding to improve /status endpoint performance ([#886](https://github.com/pinax-network/indexer-rs/issues/886)) ([1e50825](https://github.com/pinax-network/indexer-rs/commit/1e50825dffc321c7896b106d96408bc2c9a7fad0))
+* use the correct eip712 domain for each part of dips ([#667](https://github.com/pinax-network/indexer-rs/issues/667)) ([ebe950b](https://github.com/pinax-network/indexer-rs/commit/ebe950b7397a2844117f077df7709786cf3bb404))
+* validate dips pricing ([#675](https://github.com/pinax-network/indexer-rs/issues/675)) ([3d2728d](https://github.com/pinax-network/indexer-rs/commit/3d2728da9f10a61815cc284ecb0f572d36394aee))
+
+
+### Performance Improvements
+
+* stop querying the network subgraph on every TAP receipt ([#1069](https://github.com/pinax-network/indexer-rs/issues/1069)) ([60c3314](https://github.com/pinax-network/indexer-rs/commit/60c3314f38a20dd0fa85b70596e74b82f32caa03))
+
+
+### Miscellaneous Chores
+
+* remove support for legacy v1 receipts ([#929](https://github.com/pinax-network/indexer-rs/issues/929)) ([262c908](https://github.com/pinax-network/indexer-rs/commit/262c908b77b7fac3a39faf2854657ba1de284454))
+
 ## [2.2.1](https://github.com/graphprotocol/indexer-rs/compare/indexer-service-rs-v2.2.0...indexer-service-rs-v2.2.1) (2026-07-16)
 
 
